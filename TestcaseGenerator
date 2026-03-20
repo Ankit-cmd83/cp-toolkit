@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <numeric>
+#include <algorithm>
+#include <random>
+#include <chrono>
+
+using namespace std;
+
+// Initialize robust random number generator
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+// Base Random Integer Generator
+long long rand_int(long long l, long long r) {
+    return uniform_int_distribution<long long>(l, r)(rng);
+}
+
+
+// 1. Random Array
+ inline void gen_array(int n, long long min_val, long long max_val) {
+    vector<long long> arr(n);
+    for (int i = 0; i < n; i++) {
+        arr[i] = rand_int(min_val, max_val);
+    }
+   for(int i=0;i<n;i++){
+   cout<<arr[i]<<((i==n-1)?"\n":" ");
+   }
+}
+
+
+// 2. Random Permutation (1 to N)
+ inline void gen_permutation(long long n) {
+    vector<long long> p(n);
+    iota(p.begin(), p.end(), 1); // Fills with 1, 2, ..., n
+    shuffle(p.begin(), p.end(), rng);
+    for(int i=0;i<n;i++)
+    cout<<p[i]<<((i==n-1)?"\n":" ");
+}
+
+
+// 3. Random Alphabetical String (Lowercase a-z)
+ inline void gen_alpha_string(int n) {
+    string s = "";
+    for (int i = 0; i < n; i++) {
+        s += (char)('a' + rand_int(0, 25));
+    }
+   cout<<s<<"\n";
+}
+
+
+// 4. Random Binary String (0s and 1s)
+ inline void gen_binary_string(int n) {
+    string s = "";
+    for (int i = 0; i < n; i++) {
+        s += (char)('0' + rand_int(0, 1));
+    }
+    cout<<s<<"\n";
+}
+
+
+int main() {
+    // Example test case generation
+    long long t=rand_int(1,3); // for number of testcases
+    cout<<t<<"\n";
+     while(t--){
+    long long n=rand_int(2,6); // for length of the data structure
+     cout << n << "\n";
+     gen_permutation(n);
+   }
+    return 0;
+}
